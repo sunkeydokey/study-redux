@@ -5,33 +5,38 @@ const minusButton = document.getElementById('minus');
 const number = document.querySelector('span');
 
 const initialCount = 0;
-number.innerHTML = initialCount;
 
-const reducer = (count = initialCount, action) => {
+// 액션 명칭 정의
+const PLUS = 'PLUS';
+const MINUS = 'MINUS';
+// 액션 생성 함수 정의
+const plusOne = () => ({ type: PLUS });
+const minusOne = () => ({ type: MINUS });
+// 리듀서
+const reducer = (state = initialCount, action) => {
   switch (action.type) {
-    case 'PLUS':
-      return count + 1;
-    case 'MINUS':
-      return count - 1;
+    // 디스패치가 전달한 액션의 type이 PLUS인 경우
+    case PLUS:
+      return state + 1;
+    // 디스패치가 전달한 액션의 type이 MINUS인 경우
+    case MINUS:
+      return state - 1;
     default:
-      return count;
+      return state;
   }
 };
 
 const countStore = createStore(reducer);
 
-const onChange = () => {
+const render = () => {
   number.innerText = countStore.getState();
 };
-countStore.subscribe(onChange);
+countStore.subscribe(render);
 
-plusButton.addEventListener('click', () =>
-  countStore.dispatch({ type: 'PLUS' })
-);
-minusButton.addEventListener('click', () =>
-  countStore.dispatch({ type: 'MINUS' })
-);
+render();
 
+plusButton.addEventListener('click', () => countStore.dispatch(plusOne()));
+minusButton.addEventListener('click', () => countStore.dispatch(minusOne()));
 // let count = 0;
 // number.innerHTML = count;
 
