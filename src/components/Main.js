@@ -4,7 +4,7 @@ import { addToDo, deleteToDo } from '../store';
 
 import TodoList from './TodoList';
 
-const Home = () => {
+const Main = () => {
   const todos = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -35,4 +35,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Main;
